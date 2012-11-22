@@ -46,4 +46,13 @@ class LocaleBasedTimezoneDetectorTest extends \PHPUnit_Framework_TestCase
         $timezoneDetector = new LocaleBasedTimezoneDetector($localeDetector, array('fr' => 'Europe/Paris'));
         $this->assertEquals(null, $timezoneDetector->getTimezone());
     }
+
+    public function testWithoutLocaleDetector()
+    {
+        $localeDetector = $this->getMock('Sonata\IntlBundle\Locale\LocaleDetectorInterface');
+
+        $timezoneDetector = new LocaleBasedTimezoneDetector($localeDetector, 'Europe/London', array('fr' => 'Europe/Paris'));
+        $timezoneDetector->setLocale('fr');
+        $this->assertEquals('Europe/Paris', $timezoneDetector->getTimezone());
+    }
 }
